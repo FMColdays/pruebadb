@@ -8,6 +8,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const empresa = formData.get('empresa')
   const mensaje = formData.get('mensaje')
   const create_a = NOW
+  console.log("Hola")
   if (
     typeof nombre === 'string' &&
     typeof correo === 'string' &&
