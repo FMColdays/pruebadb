@@ -1,0 +1,19 @@
+---
+import { db, DATOS, like } from 'astro:db'
+
+const comments = await db
+  .select()
+  .from(DATOS)
+  .where(like(DATOS.nombre, '%Bri%'))
+---
+
+<section>
+  {
+    comments.map(comment => (
+      <div>
+        <h2>{comment.nombre}</h2>
+        <p>{comment.correo}</p>
+      </div>
+    ))
+  }
+</section>

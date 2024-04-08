@@ -1,0 +1,18 @@
+---
+import { db, DATOS } from 'astro:db'
+
+const usuarios = await db.select().from(DATOS)
+---
+
+<h2>Personal</h2>
+
+{
+  usuarios.map(({ id, nombre, correo, empresa, mensaje }) => (
+    <article>
+      <h3>{nombre}</h3>
+      <p>{correo}</p>
+      <p>{empresa}</p>
+      <p>{mensaje}</p>
+    </article>
+  ))
+}

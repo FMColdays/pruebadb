@@ -1,0 +1,60 @@
+---
+import { db, DATOS, like } from 'astro:db'
+
+let persona = await db.select().from(DATOS).where(like(DATOS.id, '1'))
+
+persona =
+  persona.length === 0
+    ? [
+        {
+          id: 1,
+          nombre: 'Erick',
+          correo: 'erickgp51@gmail.com',
+          empresa: 'Gasmon',
+          mensaje: 'Hola',
+        },
+      ]
+    : persona
+
+const { id, nombre, correo, empresa, mensaje } = persona[0]
+---
+
+<section>
+  <form id='formA' method='post' style='display: grid; padding: 3rem;'>
+    <input type='text' id='idA' name='id' value={id} />
+    <label for='nombreA'>Nombre</label>
+    <input type='text' name='nombreA' id='nombreA' value={nombre} />
+    <label for='correoA'>Correo</label>
+    <input type='email' name='correoA' id='correoA' value={correo} />
+    <label for='empresaA'>Empresa</label>
+    <input type='text' name='empresaA' id='empresaA' value={empresa} />
+    <label for='mensajeA'>Mensaje</label>
+    <textarea name='mensajeA' id='mensajeA' cols='30' rows='10'
+      >{mensaje}</textarea
+    >
+    <input type='submit' value='Enviar' />
+  </form>
+</section>
+
+<script>
+  const formulario = document.querySelector('#formA')
+
+  formulario.addEventListener('submit', function (e) {
+    e.preventDefault()
+    const formData = new FormData(this)
+    const id = formData.get('id')
+
+    console.log(id)
+
+    fetch(`api/${id}`, {
+      method: 'PUT',
+      body: formData,
+    }).then(res => {
+      if (res.ok) {
+        alert('Datos actualizados')
+      } else {
+        alert('Error al actualizar los datos')
+      }
+    })
+  })
+</script>

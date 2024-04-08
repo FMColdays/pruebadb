@@ -1,0 +1,35 @@
+<section>
+  <form method='post' id='form' >
+    <label for='nombre'>Nombre</label>
+    <input type='text' name='nombre' id='nombreE' />
+    <input type='submit' />
+  </form>
+</section>
+
+<script>
+  const form = document.querySelector('#form')
+
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    const nombre = document.querySelector('#nombreE') as HTMLInputElement
+    const nombreValor = nombre.value
+
+    fetch(`api/${nombreValor}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+  })
+</script>
+
+<style>
+  section {
+    margin-block: 100px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+</style>
